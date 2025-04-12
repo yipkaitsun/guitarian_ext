@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Guirarians Webapp Extension",
+  "description": "A Chrome extension for Guitarians webapp, however show the finger tab",
+  "version": "1.0",
+  "permissions": ["activeTab"],
+  "action": {
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://zh-hk.guitarians.com/*"], 
+      "js": ["content.js"],
+      "css": ["styles.css"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
+}
