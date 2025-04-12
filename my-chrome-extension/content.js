@@ -14,11 +14,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 }
             });
 
-            console.log('DOM Map:', domMap);
         } else {
             console.log('No chord-list-wrapper element found');
         }
-
+        const keys = Array.from(domMap.keys()).sort((a, b) => b.length - a.length).join('|');
+        const regex = new RegExp(`(${keys}(?:\\/\\w+)?|\\s+)`, 'g');
         const sectionsWrapper = document.querySelector('.sections-wrapper');
 
         if (sectionsWrapper) {
@@ -42,8 +42,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     if (innerDiv) {
                         const pre = innerDiv.querySelector('pre');
                         if (pre) {
-                            pre.textContent = pre.textContent.replace(/[\|｜]/g, ' ');
-                            const chords = pre.textContent.match(/(\s+|[^\s|]+(?:\/[^\s|]+)?)/g);
+                            const updatedText = pre.textContent.replace(/[\|丨]/g, '  ');
+                            const chords = updatedText.match(regex);
                             pre.innerHTML = '';
                             chords.forEach((chord) => {
                                 const chordSpan = document.createElement('span');
